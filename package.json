@@ -1,0 +1,13 @@
+{
+  "name": "erc20-flash-loan-pool",
+  "version": "1.0.0",
+  "description": "Minimal capital-efficient flash loan contract",
+  "main": "index.js",
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.2"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.2"
+  }
+}
