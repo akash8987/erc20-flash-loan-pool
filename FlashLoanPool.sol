@@ -32,14 +32,14 @@ contract FlashLoanPool is ReentrancyGuard {
     }
 
     /// @notice Transfer ownership to a new address
-    function transferOwnership(address newOwner) external onlyOwner {
+    function transferOwnership(address newOwner) external onlyOwner nonReentrant {
         require(newOwner != address(0), "FPO: zero address");
         emit OwnershipTransferred(owner, newOwner);
         owner = newOwner;
     }
 
     /// @notice Owner can withdraw liquidity from the pool
-    function withdrawLiquidity(uint256 amount) external onlyOwner {
+    function withdrawLiquidity(uint256 amount) external onlyOwner nonReentrant {
         require(amount > 0, "FPO: zero amount");
         require(loanToken.balanceOf(address(this)) >= amount, "FPO: insufficient balance");
         require(loanToken.transfer(owner, amount), "FPO: transfer failed");
@@ -47,7 +47,7 @@ contract FlashLoanPool is ReentrancyGuard {
     }
 
     /// @notice Rescue any ERC20 tokens accidentally sent to the contract
-    function rescueTokens(address token, uint256 amount) external onlyOwner {
+    function rescueTokens(address token, uint256 amount) external onlyOwner nonReentrant {
         require(amount > 0, "FPO: zero amount");
         require(IERC20(token).transfer(owner, amount), "FPO: transfer failed");
         emit TokensRescued(token, amount);
